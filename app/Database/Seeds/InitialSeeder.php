@@ -40,8 +40,8 @@ class InitialSeeder extends Seeder
 
         /* User */
         $this->db->table('Utilisateur')->insert([
-         'username' => 'caissier1',
-        'password' => 'admin123'
+        'username' => 'caissier1',
+        'password' => password_hash('password123', PASSWORD_DEFAULT),
         ]);
     }
 }

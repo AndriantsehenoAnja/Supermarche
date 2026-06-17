@@ -16,7 +16,7 @@ class Auth extends BaseController {
         $userModel = new UtilisateurModel();
         $user = $userModel->where('username', $username)->first();
 
-        if ($user && $user['password'] === $password) {
+        if ($user && password_verify($password, $user['password'])) {
             // On le connecte en session
             $session->set([
                 'username' => $user['username'],
