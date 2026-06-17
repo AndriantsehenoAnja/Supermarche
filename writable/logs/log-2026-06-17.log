@@ -36,3 +36,16 @@ Stack trace:
 #13 /home/itu/Documents/s4/System d'Information Rojo/github/Supermarche/system/Boot.php(166): CodeIgniter\Boot::runCommand()
 #14 /home/itu/Documents/s4/System d'Information Rojo/github/Supermarche/spark(87): CodeIgniter\Boot::bootSpark()
 #15 {main}
+CRITICAL - 2026-06-17 08:16:58 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "auth/login.php"
+[Method: GET, Route: /]
+in SYSTEMPATH/Exceptions/FrameworkException.php on line 39.
+ 1 SYSTEMPATH/View/View.php(228): CodeIgniter\Exceptions\FrameworkException::forInvalidFile()
+ 2 SYSTEMPATH/Common.php(1250): CodeIgniter\View\View->render()
+ 3 APPPATH/Controllers/Auth.php(8): view()
+ 4 SYSTEMPATH/CodeIgniter.php(951): App\Controllers\Auth->login()
+ 5 SYSTEMPATH/CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH/Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(68): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH/index.php(59): CodeIgniter\Boot::bootWeb()
+10 SYSTEMPATH/rewrite.php(44): require_once('/home/bryan/Documents/GitHub/Supermarche/public/index.php')
