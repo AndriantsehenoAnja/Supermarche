@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap-icons.min.css">
+</head>
+<body>
+    <div id="viewVente" class="view-section" style="display: none">
+          <!-- HEADER avec caisse active + utilisateur -->
+          <div
+            class="header-caisse d-flex flex-wrap align-items-center justify-content-between"
+          >
+            <div>
+              <span class="badge-caisse"
+                ><i class="bi bi-cash-stack me-2"></i> Caisse active :
+                <span id="caisseActiveLabel">Caisse Centrale 01</span></span
+              >
+            </div>
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-person-circle fs-5" style="color: #2a4058"></i>
+              <span class="fw-semibold" id="userConnectedLabel">caissier1</span>
+              <span class="text-muted small ms-1">· connecté</span>
+              <button
+                class="btn btn-outline-secondary btn-sm rounded-pill ms-2"
+                id="btnRetourAccueil"
+                style="border-color: #d0d9e5"
+              >
+                <i class="bi bi-box-arrow-left"></i> Quitter
+              </button>
+            </div>
+          </div>
+
+          <!-- SAISIE : produit + quantité + ajouter -->
+          <div class="px-3 pt-4 pb-2">
+            <div class="row g-3 align-items-end">
+              <div class="col-md-5">
+                <label for="selectProduit" class="form-label fw-semibold"
+                  ><i class="bi bi-tag me-1"></i> Produit</label
+                >
+                <select class="form-select" id="selectProduit">
+                  <option value="pain" data-prix="1.20">Pain complet</option>
+                  <option value="lait" data-prix="0.95">Lait 1L</option>
+                  <option value="oeufs" data-prix="2.50">Œufs (12)</option>
+                  <option value="riz" data-prix="3.10">Riz 1kg</option>
+                  <option value="pates" data-prix="1.80">Pâtes 500g</option>
+                  <option value="cafe" data-prix="4.90">Café moulu 250g</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label for="quantiteInput" class="form-label fw-semibold"
+                  ><i class="bi bi-hash me-1"></i> Quantité</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="quantiteInput"
+                  value="1"
+                  min="1"
+                  step="1"
+                />
+              </div>
+              <div class="col-md-3">
+                <button
+                  class="btn btn-primary rounded-pill px-4 w-100"
+                  id="btnAjouterPanier"
+                >
+                  <i class="bi bi-plus-circle me-1"></i> Ajouter
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- PANIER : tableau -->
+          <div class="px-3 mt-3">
+            <div class="table-responsive">
+              <table
+                class="table table-hover table-striped align-middle"
+                id="tablePanier"
+              >
+                <thead>
+                  <tr>
+                    <th>Produit</th>
+                    <th>Prix unit.</th>
+                    <th>Qté</th>
+                    <th>Montant</th>
+                  </tr>
+                </thead>
+                <tbody id="panierBody">
+                  <!-- Lignes exemple (pour démonstration) -->
+                  <tr>
+                    <td>
+                      <i class="bi bi-basket text-secondary me-2"></i> Pain
+                      complet
+                    </td>
+                    <td>1,20 €</td>
+                    <td>2</td>
+                    <td>2,40 €</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <i class="bi bi-basket text-secondary me-2"></i> Lait 1L
+                    </td>
+                    <td>0,95 €</td>
+                    <td>3</td>
+                    <td>2,85 €</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="3" class="text-end fw-bold">Total TTC</td>
+                    <td class="total-amount" id="totalPanier">5,25 €</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <!-- FOOTER avec bouton clôturer -->
+          <div
+            class="footer-panel d-flex flex-wrap align-items-center justify-content-between mt-2"
+          >
+            <div>
+              <span class="text-muted small"
+                ><i class="bi bi-credit-card"></i> Paiement accepté : CB /
+                Espèces</span
+              >
+            </div>
+            <div>
+              <button class="btn btn-cloturer" id="btnCloturerAchat">
+                <i class="bi bi-cart-check me-2"></i> <<< Clôturer achat >>>
+              </button>
+            </div>
+          </div>
+          <!-- petite info -->
+          <p class="text-muted small text-center mt-2 mb-0">
+            <i class="bi bi-arrow-up-circle"></i> Ajoutez des produits ou
+            cliquez sur "Clôturer" (simulation)
+          </p>
+        </div>
+        <!-- ========== FIN SECTION 2 ========== -->
+      </div>
+      <!-- fin card -->
+    </div>
+    <!-- fin container -->
+
+    <!-- Bootstrap JS (pour le comportement toggles, etc.) -->
+    <script src="bootstrap.bundle.min.js"></script>
+    <!-- code minimal pour basculer entre les vues et simuler l'ajout / total -->
+    <script>
+      (function () {
+        // Éléments DOM
+        const viewAccueil = document.getElementById("viewAccueil");
+        const viewVente = document.getElementById("viewVente");
+        const btnValider = document.getElementById("btnValiderConnexion");
+        const btnRetour = document.getElementById("btnRetourAccueil");
+        const selectCaisse = document.getElementById("selectCaisse");
+        const caisseActiveLabel = document.getElementById("caisseActiveLabel");
+        const userConnectedLabel =
+          document.getElementById("userConnectedLabel");
+        const loginInput = document.getElementById("loginInput");
+
+        // Panier
+        const selectProduit = document.getElementById("selectProduit");
+        const quantiteInput = document.getElementById("quantiteInput");
+        const btnAjouter = document.getElementById("btnAjouterPanier");
+        const panierBody = document.getElementById("panierBody");
+        const totalSpan = document.getElementById("totalPanier");
+
+        // Fonction pour basculer vers la vue vente
+        function switchToVente() {
+          viewAccueil.style.display = "none";
+          viewVente.style.display = "block";
+          // Mettre à jour le label caisse
+          const caisseTexte =
+            selectCaisse.options[selectCaisse.selectedIndex].text;
+          caisseActiveLabel.textContent = caisseTexte;
+          // Mettre à jour le nom utilisateur
+          const loginVal = loginInput.value.trim() || "utilisateur";
+          userConnectedLabel.textContent = loginVal;
+        }
+
+        // Retour à l'accueil
+        function switchToAccueil() {
+          viewVente.style.display = "none";
+          viewAccueil.style.display = "block";
+        }
+
+        // Événement validation (connexion)
+        btnValider.addEventListener("click", function (e) {
+          // petite validation simple : si login ou password vide, on alerte mais on continue pour démo
+          const login = loginInput.value.trim();
+          const pwd = document.getElementById("passwordInput").value.trim();
+          if (!login || !pwd) {
+            alert(
+              "Veuillez entrer un identifiant et un mot de passe (démo: laissez les valeurs par défaut)",
+            );
+            return;
+          }
+          switchToVente();
+        });
+
+        // Retour depuis la vente
+        btnRetour.addEventListener("click", function () {
+          if (confirm("Retourner à l'écran d'accueil ?")) {
+            switchToAccueil();
+          }
+        });
+
+        // ---------- GESTION PANIER (simulation) ----------
+        function calculerTotal() {
+          let total = 0;
+          const rows = panierBody.querySelectorAll("tr");
+          rows.forEach((row) => {
+            const cellMontant = row.cells[3];
+            if (cellMontant) {
+              const montantStr = cellMontant.textContent
+                .replace(",", ".")
+                .replace(" €", "")
+                .trim();
+              const val = parseFloat(montantStr);
+              if (!isNaN(val)) total += val;
+            }
+          });
+          totalSpan.textContent = total.toFixed(2).replace(".", ",") + " €";
+        }
+
+        // Ajouter une ligne au panier
+        function ajouterLigne(produitNom, prixUnit, quantite) {
+          const montant = prixUnit * quantite;
+          const prixFormate = prixUnit.toFixed(2).replace(".", ",") + " €";
+          const montantFormate = montant.toFixed(2).replace(".", ",") + " €";
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+          <td><i class="bi bi-basket text-secondary me-2"></i> ${produitNom}</td>
+          <td>${prixFormate}</td>
+          <td>${quantite}</td>
+          <td>${montantFormate}</td>
+        `;
+          panierBody.appendChild(tr);
+          calculerTotal();
+        }
+
+        // Gestion du clic "Ajouter"
+        btnAjouter.addEventListener("click", function () {
+          const selectedOption =
+            selectProduit.options[selectProduit.selectedIndex];
+          const produitNom = selectedOption.text;
+          const prixUnit = parseFloat(selectedOption.dataset.prix);
+          let quantite = parseInt(quantiteInput.value, 10);
+          if (isNaN(quantite) || quantite < 1) quantite = 1;
+          // Ajouter la ligne
+          ajouterLigne(produitNom, prixUnit, quantite);
+          // Remettre quantité à 1 (optionnel)
+          quantiteInput.value = 1;
+        });
+
+        // Clôturer achat
+        document
+          .getElementById("btnCloturerAchat")
+          .addEventListener("click", function () {
+            const total = totalSpan.textContent;
+            if (panierBody.children.length === 0) {
+              alert(
+                "Le panier est vide. Ajoutez des produits avant de clôturer.",
+              );
+              return;
+            }
+            alert(
+              `🧾 Achat clôturé ! Total : ${total} \n(Simulation - Merci pour votre achat)`,
+            );
+            // Réinitialiser le panier (optionnel)
+            panierBody.innerHTML = "";
+            totalSpan.textContent = "0,00 €";
+          });
+
+        // Initialisation : s'assurer que le total est cohérent avec les lignes existantes
+        calculerTotal();
+
+        // (optionnel) enter pour ajouter plus vite
+        quantiteInput.addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            btnAjouter.click();
+          }
+        });
+
+        // Pour démonstration, on peut aussi passer par "Valider" avec entrée sur le formulaire
+        document
+          .getElementById("formConnexion")
+          .addEventListener("keypress", function (e) {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              btnValider.click();
+            }
+          });
+      })();
+    </script>
+</body>
+</html>
