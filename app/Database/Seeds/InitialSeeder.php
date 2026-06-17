@@ -37,5 +37,11 @@ class InitialSeeder extends Seeder
             ['id_produit' => 5, 'quantite' => 100, 'type_mvt' => 'ENTREE'],
         ];
         $mvtModel->insertBatch($mvts);
+
+        /* User */
+        $this->db->table('Utilisateur')->insert([
+         'username' => 'caissier1',
+        'password' => 'admin123'
+        ]);
     }
 }
