@@ -14,19 +14,19 @@ class VenteController extends BaseController
     {
         // 1. Récupérer les données de la session
         $session = session();
-        $caisseSession = $session->get('caisse');
+        // $caisseSession = $session->get('id_caisse');
 
         // Sécurité : Vérifier si la session de la caisse existe
-        if (!$caisseSession || !isset($caisseSession['id_caisse'])) {
+        if (!$session->get('id_caisse')) {
             return $this->respond([
                 'status'  => 'error',
                 'message' => 'Aucune session de caisse active trouvée.'
             ], 401);
         }
 
-        $idCaisse  = $caisseSession['id_caisse'];
+        $idCaisse  = $session->get('id_caisse');
         // Si num_ticket n'existe pas en session, on génère un timestamp unique par sécurité
-        $numTicket = $caisseSession['num_ticket'] ?? time(); 
+        $numTicket = $session->get('num_ticket') ?? time();
 
         // 2. Récupérer le contenu JSON envoyé par le JavaScript (Fetch API)
         $json = $this->request->getJSON(true); // true pour récupérer sous forme de tableau associatif
@@ -57,13 +57,12 @@ class VenteController extends BaseController
                     'num_ticket'       => (int) $numTicket
                 ];
 
-                // Validation manuelle ou automatique via le modèle lors de l'insertion
-                if (!$achatModel->insert($donneesAchat)) {
+                // CodeIgniter 4 retourne l'ID généré en cas de succès, boolean 'false' sinon
+                $idAchatGenere = $achatModel->insert($donneesAchat);
+                
+                if ($idAchatGenere === false) {
                     throw new \Exception("Erreur d'insertion dans les achats : " . implode(', ', $achatModel->errors()));
                 }
-
-                // Récupération de l'ID généré pour l'achat
-                $idAchatGenere = $achatModel->getInsertID();
 
                 // Préparation des données pour la table mvtStock (SORTIE)
                 $donneesMvt = [
@@ -74,7 +73,7 @@ class VenteController extends BaseController
                 ];
 
                 if (!$mvtStockModel->insert($donneesMvt)) {
-                    throw new \Exception("Erreur d'insertion dans les mouvements de stock : " . implode(', ', $mvtStockModel->errors()));
+                    throw new \Exception("Erreur d'insertion dans les mouvements : " . implode(', ', $mvtStockModel->errors()));
                 }
             }
 
