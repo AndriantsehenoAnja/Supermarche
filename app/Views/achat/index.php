@@ -224,7 +224,8 @@ document.getElementById("btnCloturerAchat").addEventListener("click", function (
           quantiteInput.value = 1;
         });
 
-        // Clôturer achat
+        // ❌ SUPPRIMEZ CE BLOC QUI FAIT CONFLIT AVEC LE VRAI ENREGISTREMENT FETCH ❌
+        /*
         document.getElementById("btnCloturerAchat").addEventListener("click", function () {
             const total = totalSpan.textContent;
             if (panierBody.children.length === 0) {
@@ -235,6 +236,7 @@ document.getElementById("btnCloturerAchat").addEventListener("click", function (
             panierBody.innerHTML = "";
             totalSpan.textContent = "0,00 €";
         });
+        */
 
         // Initialisation du total au démarrage (affichera 0,00 € au début)
         calculerTotal();

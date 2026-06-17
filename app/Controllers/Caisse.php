@@ -31,7 +31,7 @@ class Caisse extends BaseController
                     'num_ticket' => rand(1000, 9999) 
                 ]);
 
-                return redirect()->to(base_url('achat/index'));
+                return redirect()->to(base_url('achats'));
             }
         }
 

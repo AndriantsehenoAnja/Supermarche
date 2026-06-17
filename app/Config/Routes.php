@@ -21,3 +21,6 @@ $routes->post('auth/connexion', 'Auth::connexion');
 $routes->get('caisse', 'Caisse::index');         
 $routes->post('caisse/valider', 'Caisse::valider');
 
+$routes->get('achats', 'ProduitController::index');
+$routes->post('vente/enregistrer', 'VenteController::enregistrerAchat');
+
