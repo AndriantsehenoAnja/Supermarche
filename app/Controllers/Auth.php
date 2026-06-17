@@ -13,6 +13,12 @@ class Auth extends BaseController {
         $username = $this->request->getPost('username');
         $password = $this->request->getPost('password');
 
+        if (!$this->validate([
+        'username' => 'required',
+        'password' => 'required'
+        ])) {
+            return redirect()->to(base_url('/'))->with('erreur', 'Veuillez remplir tous les champs.');
+        }
         $userModel = new UtilisateurModel();
         $user = $userModel->where('username', $username)->first();
 
