@@ -1,0 +1,4 @@
+php spark make:migration CreateCaisseTable
+php spark make:migration CreateProduitTable
+php spark make:migration CreateAchatTable
+php spark make:migration CreateMvtStockTable
