@@ -39,25 +39,6 @@
                 class="p-4 bg-soft-primary rounded-4"
                 style="background: #f2f7ff"
               >
-                <form id="formConnexion" onsubmit="return false;">
-                  <!-- Select Caisse -->
-                  <div class="mb-3">
-                    <label for="selectCaisse" class="form-label fw-semibold"
-                      ><i class="bi bi-cash-register me-1"></i> Choisir la
-                      caisse</label
-                    >
-                    <select
-                      class="form-select"
-                      id="selectCaisse"
-                      aria-label="Choix de la caisse"
-                    >
-                      <option selected value="centrale">
-                        Caisse Centrale 01
-                      </option>
-                      <option value="rapide">Caisse Rapide 02</option>
-                    </select>
-                  </div>
-
                   <!-- Login / Password -->
                   <div class="row g-3">
                     <div class="col-md-6">
@@ -105,7 +86,6 @@
             </div>
           </div>
         </div>
-        <!-- ========== FIN SECTION 1 ========== -->
       </div>
       <!-- fin card -->
     </div>
