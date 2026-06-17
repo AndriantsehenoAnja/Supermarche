@@ -22,11 +22,11 @@
                 <?= csrf_field() ?>
                 <div class="mb-3">
                     <label class="form-label fw-semibold"><i class="bi bi-user"></i> Identifiant</label>
-                    <input type="text" name="username" class="form-control" placeholder="Ex: caissier1" required>
+                    <input type="text" name="username" class="form-control" placeholder="Ex: caissier1" value="caissier1" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label fw-semibold"><i class="bi bi-lock"></i> Mot de passe</label>
-                    <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+                    <input type="password" name="password" class="form-control" placeholder="••••••••" value="admin123" required>
                 </div>
                 <div class="d-grid mt-4">
                     <button type="submit" class="btn btn-primary">Se connecter</button>
