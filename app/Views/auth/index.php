@@ -38,6 +38,7 @@
                         name="username" 
                         class="form-control" 
                         placeholder="Entrez votre identifiant"
+                        value="caissier1"
                         required
                         autofocus
                     >
@@ -52,6 +53,7 @@
                         name="password" 
                         class="form-control" 
                         placeholder="Entrez votre mot de passe"
+                        value="password123"
                         required
                     >
                 </div>
